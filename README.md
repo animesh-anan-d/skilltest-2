@@ -1,68 +1,25 @@
-# Microservices-Task
+# Microservices Deployment on Minikube
 
-## Overview
-This document provides details on testing various services after running the `docker-compose` file. These services include User, Product, Order, and Gateway Services. Each service has its own endpoints for testing purposes.
+## 1️⃣ Minikube Setup
+- `minikube start`
+- `minikube addons enable ingress`
+- `minikube tunnel`
 
----
+## 2️⃣ Build & Load Images
+- `docker build -t user-service:latest .`
+- `minikube image load user-service:latest`
+- Same for other services.
 
-## Services and Endpoints
+## 3️⃣ Deploy
+- `kubectl apply -f deployments/`
+- `kubectl apply -f services/`
+- `kubectl apply -f ingress/`
 
-### **User Service**
-- **Base URL:** `http://localhost:3000`
-- **Endpoints:**
-  - **List Users:**  
-    ```
-    curl http://localhost:3000/users
-    ```
-    Or open in your browser: [http://localhost:3000/users](http://localhost:3000/users)
+## 4️⃣ Test
+- `kubectl port-forward svc/user-service 8080:3000`
+- Or test via Ingress: `curl http://<Ingress-IP>/api/users`
 
----
-
-### **Product Service**
-- **Base URL:** `http://localhost:3001`
-- **Endpoints:**
-  - **List Products:**  
-    ```
-    curl http://localhost:3001/products
-    ```
-    Or open in your browser: [http://localhost:3001/products](http://localhost:3001/products)
-
----
-
-### **Order Service**
-- **Base URL:** `http://localhost:3002`
-- **Endpoints:**
-  - **List Orders:**  
-    ```
-    curl http://localhost:3002/orders
-    ```
-    Or open in your browser: [http://localhost:3002/orders](http://localhost:3002/orders)
-
----
-
-### **Gateway Service**
-- **Base URL:** `http://localhost:3003/api`
-- **Endpoints:**
-  - **Users:**  
-    ```
-    curl http://localhost:3003/api/users
-    ```
-  - **Products:**  
-    ```
-    curl http://localhost:3003/api/products
-    ```
-  - **Orders:**  
-    ```
-    curl http://localhost:3003/api/orders
-    ```
-
----
-
-## Instructions
-1. Start all services using the `docker-compose` file:
-   ```
-   docker-compose up
-   ```
-2. Once the services are running, use the above endpoints to verify the functionality.
-
-Happy testing!
+## Troubleshooting
+- Use `kubectl describe` for pods and services.
+- Check logs: `kubectl logs <pod>`
+- Use `minikube dashboard` for visual check.

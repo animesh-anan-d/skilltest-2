@@ -14,6 +14,10 @@ app.get('/products', (req, res) => {
   res.json(products);
 });
 
+app.get('/', (req, res) => {
+  res.send('✅ User Service is running! Try /health or /users');
+});
+
 app.listen(port, () => {
   console.log(`Product service running on port ${port}`);
 });

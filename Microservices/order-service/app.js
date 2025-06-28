@@ -25,6 +25,10 @@ app.post('/orders', async (req, res) => {
   res.json(order);
 });
 
+app.get('/', (req, res) => {
+  res.send('✅ User Service is running! Try /health or /users');
+});
+
 app.listen(port, () => {
   console.log(`Order service running on port ${port}`);
 });

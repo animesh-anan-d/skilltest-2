@@ -44,6 +44,10 @@ app.post('/api/orders', async (req, res) => {
   }
 });
 
+app.get('/', (req, res) => {
+  res.send('✅ User Service is running! Try /health or /users');
+});
+
 app.listen(port, () => {
   console.log(`Gateway service running on port ${port}`);
 });
